@@ -1,5 +1,7 @@
 # koruza-v2-device-management
 
+## Bluetooth Configurataion on RPi
+
 https://www.instructables.com/Control-Bluetooth-LE-Devices-From-A-Raspberry-Pi/
 
 1. Remove existing bluez installation with `sudo apt-get --purge remove bluez`
