@@ -21,7 +21,7 @@ class DeviceManagement():
     def __init__(self):
 
         # init local rpc communication
-        self.local_koruza_client = xmlrpc.client.ServerProxy(f"http://localhost:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
+        self.local_koruza_client = xmlrpc.client.ServerProxy(f"http://localhost:{KORUZA_MAIN_PORT}", allow_none=True)
 
         # init device to device communication
         # read config file
@@ -35,16 +35,19 @@ class DeviceManagement():
         #2. get other unit address - has to be configured beforehand in config step - enter manually in config? TODO
         remote_unit_address = config[channel]["remote_unit_addr"]
         
-        #3. init remote device_client with selected communication channel
-        # WIFI
-        if channel == "wifi":
-            self.remote_device_client = xmlrpc.client.ServerProxy(f"http://{REMOTE_UNIT_IP}:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
-        # BLE TODO
-        if channel == "ble":
-            pass
-        
-        #4. set mode based on configuration
+         #4. set mode based on configuration
         self.mode = config[channel]["mode"]
+
+        print(f"Starting in mode {self.mode}")
+
+        if self.mode == "master":
+            #3. init remote device_client with selected communication channel
+            # WIFI
+            if channel == "wifi":
+                self.remote_device_client = xmlrpc.client.ServerProxy(f"http://{REMOTE_UNIT_IP}:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
+            # BLE TODO
+            if channel == "ble":
+                pass
 
     def request_remote(self, command, params):
         """
@@ -77,8 +80,8 @@ class DeviceManagement():
         print(f"Handling remote request: {command} with params {params}")
 
         # pipe data to koruza client (main) and respond with response from main
-        if command == "get_sfp_data":
-            response = self.local_koruza_client.get_sfp_data()
+        if command == "get_sfp_diagnostics":
+            response = self.local_koruza_client.get_sfp_diagnostics()
 
         if command == "get_motors_position":
             response = self.local_koruza_client.get_motors_position()
@@ -92,5 +95,5 @@ class DeviceManagement():
         if command == "disable_led":
             response = self.local_koruza_client.disable_led()
 
-        print(f"Response from slave unit: {response}")
+            # print(f"Response from slave unit: {response}")
         return response
