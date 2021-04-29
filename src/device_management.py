@@ -5,7 +5,7 @@ import time
 
 import xmlrpc.client
 
-from ...src.constants import DEVICE_MANAGEMENT_PORT, KORUZA_MAIN_PORT, REMOTE_UNIT_IP
+from ...src.constants import DEVICE_MANAGEMENT_PORT, KORUZA_MAIN_PORT
 from ...src.config_manager import get_config
 
 socket.setdefaulttimeout(0.5)  # this solves our blocking problem apparently - not good enough - TODO
@@ -49,7 +49,7 @@ class DeviceManagement():
             #4. init remote device_client with selected communication channel
             # WIFI
             if channel == "wifi":
-                self.remote_device_client = xmlrpc.client.ServerProxy(f"http://{REMOTE_UNIT_IP}:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
+                self.remote_device_client = xmlrpc.client.ServerProxy(f"http://{remote_unit_address}:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
             # BLE TODO
             if channel == "ble":
                 pass
@@ -119,6 +119,9 @@ class DeviceManagement():
 
         if command == "move_motors":
             response = self.local_koruza_client.move_motors(*params)  # unpack params
+
+        if command == "move_motors_to":
+            response = self.local_koruza_client.move_motors_to(*params)  # unpack params
 
         if command == "home":
             response = self.local_koruza_client.home()
