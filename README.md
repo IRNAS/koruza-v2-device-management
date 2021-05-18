@@ -19,3 +19,11 @@ sudo make install
 sudo cp attrib/gatttool /usr/bin/
 ```
 Raspberry Pi ble help: https://www.argenox.com/library/bluetooth-low-energy/using-raspberry-pi-ble/
+
+
+## Wi-fi dongle configuration
+
+### Primary Unit Configuration
+Follow [this guide](https://www.raspberrypi.org/documentation/configuration/wireless/access-point-routed.md) to configure the wireless access point on the primary unit.
+
+NOTE: Automate this sometime down the line.
