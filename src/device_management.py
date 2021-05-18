@@ -45,7 +45,7 @@ class DeviceManagement():
 
         print(f"Starting in mode {self.mode}")
 
-        if self.mode == "master":
+        if self.mode == "primary":
             #4. init remote device_client with selected communication channel
             # WIFI
             if channel == "wifi":
@@ -84,11 +84,11 @@ class DeviceManagement():
             else:
                 return # return
 
-        # if unit is in slave mode don't request any data, handle here or in GUI? TODO
-        if self.mode == "slave":
+        # if unit is in secondary mode don't request any data, handle here or in GUI? TODO
+        if self.mode == "secondary":
             return
 
-        # if not in slave mode get response from communication channel
+        # if not in secondary mode get response from communication channel
 
         # WIFI/LAN
         # NOTE - this part has to be done async or with a timeout
