@@ -8,7 +8,7 @@ import xmlrpc.client
 from ...src.constants import DEVICE_MANAGEMENT_PORT, KORUZA_MAIN_PORT
 from ...src.config_manager import get_config
 
-socket.setdefaulttimeout(0.5)  # this solves our blocking problem apparently - not good enough - TODO
+socket.setdefaulttimeout(0.5)  # this solves our blocking problem apparently - TODO find a better way
 RC_TIMEOUT = 10  # try again every 10 seconds
 
 log = logging.getLogger()
@@ -67,7 +67,6 @@ class DeviceManagement():
         """
         Used locally from koruza.py
         Request remote command over one of the available channels
-        TODO: enable multiple channels in config, only local network is supported for now
 
         Only used to pipe command to remote endpoint!
         """
@@ -83,7 +82,6 @@ class DeviceManagement():
                 pass
 
             else:
-                # print("Returning")
                 return # return
 
         # if unit is in slave mode don't request any data, handle here or in GUI? TODO
@@ -92,7 +90,7 @@ class DeviceManagement():
 
         # if not in slave mode get response from communication channel
 
-        # WIFI 
+        # WIFI/LAN
         # NOTE - this part has to be done async or with a timeout
         print(f"Received remote request command: {command}, params: {params}")
         response = self.remote_device_client.handle_remote_request(command, params)
@@ -107,8 +105,6 @@ class DeviceManagement():
         """
         Exposed externally as endpoint for remote calls
         """
-
-        print(f"Handling remote request: {command} with params {params}")
 
         # pipe data to koruza client (main) and respond with response from main
         if command == "get_sfp_diagnostics":
@@ -126,8 +122,7 @@ class DeviceManagement():
         if command == "home":
             response = self.local_koruza_client.home()
 
-        if command == "disable_led":
-            response = self.local_koruza_client.disable_led()
+        if command == "toggle_led":
+            response = self.local_koruza_client.toggle_led()
 
-            # print(f"Response from slave unit: {response}")
         return response
