@@ -48,7 +48,7 @@ class DeviceManagement():
         if self.mode == "primary":
             #4. init remote device_client with selected communication channel
             # WIFI
-            if channel == "wifi":
+            if channel == "wifi" or channel == "local":
                 self.remote_device_client = xmlrpc.client.ServerProxy(f"http://{remote_unit_address}:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
             # BLE TODO
             if channel == "ble":
