@@ -30,7 +30,7 @@ class DeviceManagement():
 
         # init device to device communication
         # read config file
-        config = get_config()["device_mgmt"]
+        config = get_config()["link_config"]
 
         print(f"Read config: {config}")
 
@@ -124,5 +124,8 @@ class DeviceManagement():
 
         if command == "toggle_led":
             response = self.local_koruza_client.toggle_led()
+
+        if command == "get_unit_id":
+            response = self.local_koruza_client.get_unit_id()
 
         return response
