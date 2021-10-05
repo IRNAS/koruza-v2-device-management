@@ -128,7 +128,7 @@ class DeviceManagement():
         if command == "get_unit_id":
             response = self.local_koruza_client.get_unit_id()
         
-        if command = "get_unit_version":
+        if command == "get_unit_version":
             response = self.local_koruza_client.get_unit_version()
 
         return response
