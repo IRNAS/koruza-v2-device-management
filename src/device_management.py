@@ -125,6 +125,9 @@ class DeviceManagement():
         if command == "toggle_led":
             response = self.local_koruza_client.toggle_led()
 
+        if command == "get_led_data":
+            response = self.local_koruza_client.get_led_data()
+
         if command == "get_unit_id":
             response = self.local_koruza_client.get_unit_id()
         
