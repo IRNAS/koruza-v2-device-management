@@ -30,7 +30,7 @@ class DeviceManagement():
 
         # init device to device communication
         # read config file
-        config = get_config()["device_mgmt"]
+        config = get_config()["link_config"]
 
         print(f"Read config: {config}")
 
@@ -48,7 +48,7 @@ class DeviceManagement():
         if self.mode == "primary":
             #4. init remote device_client with selected communication channel
             # WIFI
-            if channel == "wifi":
+            if channel == "wifi" or channel == "local":
                 self.remote_device_client = xmlrpc.client.ServerProxy(f"http://{remote_unit_address}:{DEVICE_MANAGEMENT_PORT}", allow_none=True)
             # BLE TODO
             if channel == "ble":
@@ -124,5 +124,14 @@ class DeviceManagement():
 
         if command == "toggle_led":
             response = self.local_koruza_client.toggle_led()
+
+        if command == "get_led_data":
+            response = self.local_koruza_client.get_led_data()
+
+        if command == "get_unit_id":
+            response = self.local_koruza_client.get_unit_id()
+        
+        if command == "get_unit_version":
+            response = self.local_koruza_client.get_unit_version()
 
         return response
