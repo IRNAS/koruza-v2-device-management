@@ -134,4 +134,7 @@ class DeviceManagement():
         if command == "get_unit_version":
             response = self.local_koruza_client.get_unit_version()
 
+        if command == "get_motor_status":
+            response = self.local_koruza_client.get_motor_status()
+
         return response
