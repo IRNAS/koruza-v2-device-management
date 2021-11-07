@@ -137,4 +137,7 @@ class DeviceManagement():
         if command == "get_motor_status":
             response = self.local_koruza_client.get_motor_status()
 
+        if command == "set_zoom_level":
+            response = self.local_koruza_client.set_zoom_level(*params)
+
         return response
