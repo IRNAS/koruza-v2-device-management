@@ -72,17 +72,18 @@ class DeviceManagement():
         """
         self.time_of_last_request = time.time()
 
-        if self.time_of_last_request - self.time_of_last_reply > RC_TIMEOUT and not self.timeout_triggered:  # if more than RC_TIMEOUT seconds passed increase retry count
-            self.timeout_triggered = True
+        # TODO debug - it's causing problem
+        # if self.time_of_last_request - self.time_of_last_reply > RC_TIMEOUT and not self.timeout_triggered:  # if more than RC_TIMEOUT seconds passed increase retry count
+        #     self.timeout_triggered = True
 
-        if self.timeout_triggered:  
-            if int((self.time_of_last_request - self.time_of_last_reply) / RC_TIMEOUT) > self.retry_count:
-                self.retry_count += 1
-                log.warning("Second unit doesn't seem to be available! Retrying")
-                pass
+        # if self.timeout_triggered:  
+        #     if int((self.time_of_last_request - self.time_of_last_reply) / RC_TIMEOUT) > self.retry_count:
+        #         self.retry_count += 1
+        #         log.warning("Second unit doesn't seem to be available! Retrying")
+        #         pass
 
-            else:
-                return # return
+        #     else:
+        #         return # return
 
         # if unit is in secondary mode don't request any data, handle here or in GUI? TODO
         if self.mode == "secondary":
@@ -96,7 +97,7 @@ class DeviceManagement():
         response = self.remote_device_client.handle_remote_request(command, params)
         self.timeout_triggered = False  # set retry count to 0 if response was received
         self.time_of_last_reply = time.time()
-        print(f"Received response from remote: {response}")
+        # print(f"Received response from remote: {response}")
         return response
 
         # BLE TODO
@@ -136,6 +137,9 @@ class DeviceManagement():
 
         if command == "get_motor_status":
             response = self.local_koruza_client.get_motor_status()
+        
+        if command == "take_picture":
+            response = self.local_koruza_client.take_picture()
 
         if command == "set_zoom_level":
             response = self.local_koruza_client.set_zoom_level(*params)
